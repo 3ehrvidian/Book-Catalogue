@@ -1,0 +1,112 @@
+.hero-banner {
+    background-image: url('../img/Book_banner.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    color: white;
+    padding: 100px 0;
+    height: 510px;
+}
+
+::placeholder{
+    color: #C3C3C3!important;
+}
+
+h1{
+    font-family: 'Jockey One';
+    font-size: 50px;
+}
+
+h2{
+    font-family: 'Josefin Sans';
+}
+
+p{
+    font-family: 'Jost';
+}
+
+a:link, a:visited, a:hover, a:active{
+    text-decoration: none;
+}
+
+.btn-app{
+    background-color: #786BD3;
+    border-radius: 20px;
+    color: white;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.btn-app:hover{
+    background-color: #4739a3!important;
+}
+
+.container-app{
+    padding-left: 60px;
+    padding-right: 60px;
+}
+
+.card-title{
+    font-family: 'Jost';
+    font-weight: normal;
+}
+
+.author{    
+    font-family: 'Jost';
+}
+
+.category{
+    color: #C3C3C3;
+    font-family: 'Jost';
+    font-size: 12px;
+}
+
+.nav-app{
+    margin: 0 8px 0 8px;
+    font-family: 'Josefin Sans';
+    font-weight: bold;
+    font-size: 20px;
+    color: black;
+}
+
+.nav-brand-app{
+    font-family: 'Jockey One';
+    font-size: 30px;
+}
+
+.list-app{
+    list-style-type: none;
+    padding: 10px 0 10px 28px;
+    cursor: pointer;
+}
+
+.list-app:hover{
+    background-color: #786BD3;
+    color: white;
+}
+
+.img-app{
+    height: 245px;
+}
+
+.card{
+    cursor: pointer;
+}
+
+.card-text{
+    font-family: 'Jost';
+    font-size: 14px;
+}   
+
+.footer{
+    background-color: #fafafa;
+}
+
+@media screen and (min-width: 1280px) {
+    .app-nav{
+        margin-left: 150px;
+        margin-right: 150px;
+    }
+}

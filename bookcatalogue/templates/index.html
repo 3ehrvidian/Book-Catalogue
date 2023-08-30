@@ -1,0 +1,130 @@
+<!doctype html>
+{% load static %}
+<html lang="en" ng-app="bcApp">
+
+<head>
+  <title>Book Catalogue</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS v5.2.1 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.1/css/fontawesome.min.css" integrity="sha384-QYIZto+st3yW+o8+5OHfT6S482Zsvz2WfOzpFSXMF9zqeLcFV0/wlZpMtyFcZALm" crossorigin="anonymous">
+  <link rel="stylesheet" href="{% static 'css/app.css' %}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jockey+One&family=Josefin+Sans:ital,wght@0,400;0,700;1,400&family=Jost:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+  <style>
+
+  </style>
+
+</head>
+
+<body>
+  <header>
+    <!-- place navbar here -->
+  </header>
+  <main>
+    {% verbatim  %}
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container app-nav">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand nav-brand-app" href="#">Book Catalogue</a>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarTogglerDemo03">
+          <ul class="navbar-nav mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link nav-app" aria-current="page" href="#">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link nav-app" aria-current="page" href="#">Sign Up</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link nav-app" href="#">Login</a>
+            </li>            
+          </ul>
+          <!-- <form class="d-flex" role="search">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+          </form> -->
+        </div>
+      </div>
+    </nav>
+    <div class="jumbotron jumbotron-fluid hero-banner">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <!-- Tidak ada konten di sini karena ini adalah latar belakang -->
+          </div>
+          <div class="col-md-6 d-flex align-items-center">
+            <div class="mt-5" style="color: #f7f7f7;">
+              <h2>Welcome to,</h2>
+              <h1>Book Catalogue</h1>
+              <p>You can read book for free.</p>
+              <button class="btn btn-app">Start Reading</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div ng-controller="bookCtrl" class="container container-app mt-5">
+      <div class="row">
+        <div class="col-3">
+          <h2>Search</h2>
+          <input type="text" name="" class="form-control rounded-4" id="" placeholder="Input here">
+          <h2 class="mt-4">Category</h2>
+          <ul class="list-group">
+            <li class="list-app active">Cooking</li>
+            <li class="list-app">Fiction</li>
+            <li class="list-app">Magazine</li>
+            <li class="list-app">Novel</li>
+            <li class="list-app">Technology</li>
+          </ul>
+        </div>
+        <div class="col-9">
+          <h2>Our Book Collections</h2>
+          <div class="row" ng-controller="bookCtrl">
+
+            <div class="col-4" ng-repeat="b in books track by $index">
+              <div class="card mb-3" style="width: 15rem;">
+                <img src="https://source.unsplash.com/random/?Book&1" class="card-img-top rounded img-app" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">{{ b.book_title }}</h5>
+                  <h6 class="author">{{ b.book_author }}</h6>
+                  <h6 class="category">{{ b.book_category }}</h6>
+                  <p class="card-text">{{ b.book_content }}</p>                  
+                </div>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </div>      
+    </div>
+    <div class="mt-5">
+      <div class="footer text-center">
+        <p style="margin-bottom: 0px; padding-top: 10px; padding-bottom: 10px;">Copyright 2023</p>
+      </div>
+    </div>
+    {% endverbatim  %}
+    
+  </main>
+  <footer>
+    <!-- place footer here -->
+  </footer>
+  <!-- Bootstrap JavaScript Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+    integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+    integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
+  </script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  <script src="{% static 'js/app.js' %}"></script>
+</body>
+
+</html>
