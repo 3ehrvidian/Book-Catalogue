@@ -1,0 +1,148 @@
+<!doctype html>
+{% load static %}
+<html lang="en" ng-app=bcApp>
+
+<head>
+  <title>Dashboard | Book Catalogue</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS v5.2.1 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/app.css' %}">
+
+</head>
+
+<body ng-controller="bookCtrl">
+  {% if user.is_authenticated %}
+  <header>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Admin Book Catalogue</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="{% url 'logout' %}">Logout</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <main>
+    <div class="container-fluid mt-4">
+      <div class="row">
+        <div class="col-2">
+          <ul class="list-group">
+            <li class="list-app">Dashboard</li>
+            <li class="list-app" data-bs-toggle="modal" data-bs-target="#signUpModal">Add Books Data</li>    
+          </ul>
+        </div>
+        <div class="col-10">
+          <h1>Book Table</h1>          
+          <div class="p-3 mb-2 bg-info text-white" ng-show="message">{{ message }}</div>
+          {% verbatim  %}
+          <div class="col-3">
+            <input type="text" name="" class="form-control" id="" placeholder="Search book" ng-model="key">
+          </div>
+          
+          <table class="table table-striped shadow mt-3">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Book Title</th>
+                <th>Book Author</th>
+                <th>Book Category</th>
+                <th>Book Content</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="b in books | filter:key">
+                <td>{{ b.id }}</td>
+                <td>{{ b.book_title }}</td>
+                <td>{{ b.book_author }}</td>
+                <td>{{ b.book_category }}</td>
+                <td>{{ b.book_content | limitTo:40 }}{{b.book_content.length > 20 ? ' ...' : ''}}</td>
+                <td>                  
+                  <button class="btn btn-danger" ng-click="saveIdBook(b.id)" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          {% endverbatim %}
+        </div>
+      </div>
+    </div>
+
+    {% verbatim  %}
+    <div class="modal fade" id="signUpModal" tabindex="-1" aria-labelledby="signUpModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="signUpModalLabel">Add Book</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form ng-submit="postBook();">
+              <input type="text" ng-model="data.book_title" name="book_title" id="title" class="form-control mb-3" placeholder="Book Title" required>
+              <input type="text" ng-model="data.book_author" name="book_author" id="author" class="form-control mb-3" placeholder="Book Author" required>
+              <input type="text" ng-model="data.book_category" name="book_category" id="category" class="form-control mb-3" placeholder="Book Category" required>
+              <textarea name="book_content" ng-model="data.book_content" id="content" class="form-control" rows="10" placeholder="Book Content" required></textarea>
+              
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="form-control btn btn-app mt-3" >Sign Up</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endverbatim  %}
+
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="deleteModalLabel">Delete Book</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <h5>Are you sure want to delete this book?</h5>
+              
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger mt-3" ng-click="deleteBook()">Yes</button>            
+            <button type="button" class="btn btn-defaul mt-3" data-dismiss="modal">Cancel</button>            
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% else %}
+    <h3>U need to login first <a href="/"> here</a></h3>
+    {% endif %}
+  </main>
+  <footer>
+    <!-- place footer here -->
+  </footer>
+  <!-- Bootstrap JavaScript Libraries -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+    integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+    integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
+  </script>
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  <script src="{% static 'js/app.js' %}"></script>
+</body>
+
+</html>

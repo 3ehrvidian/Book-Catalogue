@@ -27,7 +27,7 @@
     <!-- place navbar here -->
   </header>
   <main>
-    {% verbatim  %}
+    
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container app-nav">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,12 +39,18 @@
             <li class="nav-item">
               <a class="nav-link nav-app" aria-current="page" href="#">About</a>
             </li>
+            {% if user.is_authenticated %}
             <li class="nav-item">
-              <a class="nav-link nav-app" aria-current="page" href="#">Sign Up</a>
+              <a class="nav-link nav-app" href="{% url 'logout' %}">Logout</a>
+            </li>
+            {% else %}  
+            <li class="nav-item">
+              <a class="nav-link nav-app" aria-current="page" href="" data-bs-toggle="modal" data-bs-target="#signUpModal">Sign Up</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link nav-app" href="#">Login</a>
-            </li>            
+              <a class="nav-link nav-app" href="" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a>
+            </li>
+            {% endif %}         
           </ul>
           <!-- <form class="d-flex" role="search">
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -53,6 +59,7 @@
         </div>
       </div>
     </nav>
+    {% verbatim  %}
     <div class="jumbotron jumbotron-fluid hero-banner">
       <div class="container">
         <div class="row">
@@ -64,40 +71,45 @@
               <h2>Welcome to,</h2>
               <h1>Book Catalogue</h1>
               <p>You can read book for free.</p>
-              <button class="btn btn-app">Start Reading</button>
+              <a href="#main-content" class="btn btn-app">Start Reading</a>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div ng-controller="bookCtrl" class="container container-app mt-5">
+    <div ng-controller="bookCtrl" class="container container-app mt-5" id="main-content">
       <div class="row">
         <div class="col-3">
           <h2>Search</h2>
-          <input type="text" name="" class="form-control rounded-4" id="" placeholder="Input here">
+          <input type="text" name="" class="form-control rounded-4" id="" placeholder="Input here" ng-model="key">
           <h2 class="mt-4">Category</h2>
           <ul class="list-group">
-            <li class="list-app active">Cooking</li>
-            <li class="list-app">Fiction</li>
-            <li class="list-app">Magazine</li>
-            <li class="list-app">Novel</li>
-            <li class="list-app">Technology</li>
+            <li class="list-app" ng-click="cat = ''">All</li>
+            <li class="list-app" ng-click="cat = 'Cooking'">Cooking</li>
+            <li class="list-app" ng-click="cat = 'Fiction'">Fiction</li>
+            <li class="list-app" ng-click="cat = 'Magazine'">Magazine</li>
+            <li class="list-app" ng-click="cat = 'Novel'">Novel</li>
+            <li class="list-app" ng-click="cat = 'Technology'">Technology</li>            
           </ul>
         </div>
         <div class="col-9">
           <h2>Our Book Collections</h2>
           <div class="row" ng-controller="bookCtrl">
 
-            <div class="col-4" ng-repeat="b in books track by $index">
+            <div class="col-4" ng-repeat="b in (results = (books | filter:key | filter:cat))">
               <div class="card mb-3" style="width: 15rem;">
-                <img src="https://source.unsplash.com/random/?Book&1" class="card-img-top rounded img-app" alt="...">
+                <img src="https://source.unsplash.com/random/?Book&{{ b.id }}" class="card-img-top rounded img-app" alt="...">
                 <div class="card-body">
                   <h5 class="card-title">{{ b.book_title }}</h5>
                   <h6 class="author">{{ b.book_author }}</h6>
                   <h6 class="category">{{ b.book_category }}</h6>
-                  <p class="card-text">{{ b.book_content }}</p>                  
+                  <p class="card-text">{{ b.book_content | limitTo: 50 }}{{b.book_content.length > 20 ? '...' : ''}}</p>                  
                 </div>
               </div>
+            </div>
+
+            <div class="text-center" ng-if="results.length == 0">
+              <p>Sorry your book not found</p>
             </div>
             
           </div>
@@ -110,6 +122,56 @@
       </div>
     </div>
     {% endverbatim  %}
+
+    <!-- Login Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="loginModalLabel">Login</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form method="POST" action="{% url 'login' %}">
+              {% csrf_token %}    
+              <h5>Username</h5>
+              <input type="text" name="username" class="form-control mb-3" id="" placeholder="Input your Username" required>
+              <h5>Password</h5>
+              <input type="password" name="password" class="form-control" id="" placeholder="Input your Password" required>
+              
+          </div>
+          <div class="modal-footer">
+            <input type="submit" value="Login" class="form-control btn btn-app mt-3" />
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    
+    <!-- Sign Up Modal -->
+    <div class="modal fade" id="signUpModal" tabindex="-1" aria-labelledby="signUpModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="signUpModalLabel">Sign Up</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+
+            <form action="{% url 'sign_up' %}" method="POST">
+              {% csrf_token %}    
+              {{ form.as_p }}
+              
+          </div>
+          <div class="modal-footer">
+            <input type="submit" value="Sign Up" class="form-control btn btn-app mt-3" />
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
     
   </main>
   <footer>

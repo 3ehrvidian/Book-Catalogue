@@ -41,6 +41,7 @@ a:link, a:visited, a:hover, a:active{
 
 .btn-app:hover{
     background-color: #4739a3!important;
+    color:white!important;
 }
 
 .container-app{
@@ -83,6 +84,11 @@ a:link, a:visited, a:hover, a:active{
 }
 
 .list-app:hover{
+    background-color: #786BD3;
+    color: white;
+}
+
+.list-app:active{
     background-color: #786BD3;
     color: white;
 }

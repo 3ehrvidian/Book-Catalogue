@@ -7,5 +7,9 @@ router.register('book', views.BookViewSet)
 
 urlpatterns = [
     path('', views.index, name='index'),
+    path('login/', views.login_user, name='login'),
+    path('dashboard/', views.dashboard, name='dashboard'),
+    path('sign_up/', views.signup_user, name='sign_up'),
+    path('logout/', views.logout_user, name='logout'),
     path('api/', include(router.urls))
 ]
