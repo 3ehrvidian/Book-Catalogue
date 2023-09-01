@@ -70,6 +70,7 @@
                 <td>{{ b.book_category }}</td>
                 <td>{{ b.book_content | limitTo:40 }}{{b.book_content.length > 20 ? ' ...' : ''}}</td>
                 <td>                  
+                  <button class="btn btn-warning" ng-click="getBook(b.id)" data-bs-toggle="modal" data-bs-target="#editModal">Edit</button>
                   <button class="btn btn-danger" ng-click="saveIdBook(b.id)" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
                 </td>
               </tr>
@@ -99,6 +100,30 @@
           <div class="modal-footer">
             <button type="submit" class="form-control btn btn-app mt-3" >Sign Up</button>
             </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endverbatim  %}
+
+    {% verbatim  %}
+    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="editModalLabel">Update Book</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form ng-submit="updateBook();" ng-repeat="bi in bookById">
+              <input type="text" ng-model="data.book_title" name="book_title" id="title" class="form-control mb-3" placeholder="Book Title" value="{{ bi.book_title }}" required>
+              <input type="text" ng-model="data.book_author" name="book_author" id="author" class="form-control mb-3" placeholder="Book Author" required>
+              <input type="text" ng-model="data.book_category" name="book_category" id="category" class="form-control mb-3" placeholder="Book Category" required>
+              <textarea name="book_content" ng-model="data.book_content" id="content" class="form-control" rows="10" placeholder="Book Content" required></textarea>
+              
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="form-control btn btn-app mt-3" >Update</button>          
           </div>
         </div>
       </div>
