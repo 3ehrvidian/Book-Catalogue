@@ -1,0 +1,103 @@
+<!doctype html>
+{% load static %}
+<html lang="en" ng-app=bcApp>
+
+<head>
+  <title>Title</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS v5.2.1 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/app.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jockey+One&family=Josefin+Sans:ital,wght@0,400;0,700;1,400&family=Jost:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+  <header>
+    <!-- place navbar here -->
+  </header>
+  <main>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container app-nav">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <a class="navbar-brand nav-brand-app" href="#">Book Catalogue</a>
+          <div class="collapse navbar-collapse justify-content-end" id="navbarTogglerDemo03">
+            <ul class="navbar-nav mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link nav-app" aria-current="page" href="#">About</a>
+              </li>
+              {% if user.is_authenticated %}
+              <li class="nav-item">
+                <a class="nav-link nav-app" href="{% url 'dashboard' %}">Dashboard</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link nav-app" href="{% url 'logout' %}">Logout</a>
+              </li>
+              {% else %}  
+              <li class="nav-item">
+                <a class="nav-link nav-app" aria-current="page" href="" data-bs-toggle="modal" data-bs-target="#signUpModal">Sign Up</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link nav-app" href="" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a>
+              </li>
+              {% endif %}         
+            </ul>
+            <!-- <form class="d-flex" role="search">
+              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-outline-success" type="submit">Search</button>
+            </form> -->
+          </div>
+        </div>
+      </nav>
+      <div class="container container-app mt-5" ng-controller="detailCtrl">
+        <div class="row mb-5">
+            <div class="col-2">
+                <a href="/" class="btn btn-app">Back</a>
+            </div>
+        </div>
+        <div class="row mb-5">
+            <div class="col-6 justify-content-center">
+                <img src="https://source.unsplash.com/random/?Book&1" alt="" class="img-app rounded shadow">
+            </div>
+        </div>
+        {% verbatim  %}
+        <div class="row" >
+            <p class="fs-1 mb-0">{{ books.book_title }}</p>
+            <p class="fs-3 mb-0">{{ books.book_category }}</p>
+            <p class="fs-5">{{ books.book_author }}</p>
+            <!-- <button class="btn btn-primary" ng-click="test()">Click</button> -->
+            <p>{{ books.book_content }}</p>
+        </div>
+        {% endverbatim  %}
+      </div>
+      <div class="mt-5">
+        <div class="footer text-center">
+          <p style="margin-bottom: 0px; padding-top: 10px; padding-bottom: 10px;">Copyright 2023</p>
+        </div>
+      </div>
+  </main>
+  <footer>
+    <!-- place footer here -->
+  </footer>
+  <!-- Bootstrap JavaScript Libraries -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+    integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+    integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
+  </script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  <script src="{% static 'js/app.js' %}"></script>
+</body>
+
+</html>

@@ -50,6 +50,9 @@ def login_user(request):
              return redirect('/')
     else:
         return render(request, 'index.html', {})
+    
+def details_book(request, pk):
+     return render(request, 'details.html', {"id":pk})
 
 def dashboard(request):
     form = AddBookData()

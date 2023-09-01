@@ -41,6 +41,9 @@
             </li>
             {% if user.is_authenticated %}
             <li class="nav-item">
+              <a class="nav-link nav-app" href="{% url 'dashboard' %}">Dashboard</a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link nav-app" href="{% url 'logout' %}">Logout</a>
             </li>
             {% else %}  
@@ -97,7 +100,7 @@
           <div class="row" ng-controller="bookCtrl">
 
             <div class="col-4" ng-repeat="b in (results = (books | filter:key | filter:cat))">
-              <div class="card mb-3" style="width: 15rem;">
+              <div class="card mb-3" style="width: 15rem; cursor: pointer;" ng-click="toDetails(b.id)">
                 <img src="https://source.unsplash.com/random/?Book&{{ b.id }}" class="card-img-top rounded img-app" alt="...">
                 <div class="card-body">
                   <h5 class="card-title">{{ b.book_title }}</h5>
