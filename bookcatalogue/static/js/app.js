@@ -29,7 +29,7 @@ app.controller('bookCtrl',function($scope, $http){
 
     $scope.updateBook = function(){
         let url = 'http://127.0.0.1:8000/api/book/'
-        $http.post(url, JSON.stringify($scope.data)).then(function success(response){
+        $http.put(url, JSON.stringify($scope.data)).then(function success(response){
             alert('Success');
             location.reload();
         })
